@@ -20,6 +20,7 @@ const handleRefreshToken = async (req, res) => {
                 {
                     "UserInfo": {
                         "email": decoded.email,
+                        "id": foundUser._id,
                         "roles": roles
                     }
                 },

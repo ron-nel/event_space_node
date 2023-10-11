@@ -2,11 +2,6 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const RoomSchema = new Schema({
-	partner_id: {
-		type: mongoose.Schema.Types.ObjectId,
-		required: true,
-		ref: "User",
-	},
 	name: {
 		type: String,
 		required: [true, "Please add name"],
@@ -58,6 +53,11 @@ const RoomSchema = new Schema({
 	speaker: {
 		type: String,
 		required: [true, "Please add speaker"],
+	},
+	created_user_id: {
+		type: mongoose.Schema.Types.ObjectId,
+		required: true,
+		ref: "User",
 	},
 });
 

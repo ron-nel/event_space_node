@@ -28,15 +28,15 @@ app.use(express.json());
 app.use(cookieParser());
 
 //routes
+app.use('/', require('./routes/api/room'))
 app.use('/register', require('./routes/register'));
 app.use('/login', require('./routes/login'));
 app.use('/refresh', require('./routes/refresh'));
 app.use('/logout', require('./routes/logout'));
 
-// app.use('/admin', require("./routes/api/room_routes"));
-// app.use('/admin', require("./routes/api/schedule_routes"));
 app.use(verifyJWT);
 app.use('/users', require("./routes/api/user"));
+// app.use('/schedule', require("./routes/api/schedule"));
 
 app.use(errorHandler);
 
