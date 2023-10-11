@@ -18,3 +18,9 @@ exports.ALLOWED_ORIGINS = [
     'http://127.0.0.1:5000',
     'http://localhost:3000',
 ];
+
+exports.SCHEDULE_STATUS = {
+    RESERVED: 1,
+    CANCELLED: 2,
+    COMPLETED: 3,
+}

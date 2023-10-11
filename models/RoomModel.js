@@ -59,6 +59,8 @@ const RoomSchema = new Schema({
 		required: true,
 		ref: "User",
 	},
+}, {
+	timestamps: true
 });
 
 module.exports = mongoose.model("Room", RoomSchema);

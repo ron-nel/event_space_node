@@ -36,7 +36,7 @@ app.use('/logout', require('./routes/logout'));
 
 app.use(verifyJWT);
 app.use('/users', require("./routes/api/user"));
-// app.use('/schedule', require("./routes/api/schedule"));
+app.use('/schedule', require("./routes/api/schedule"));
 
 app.use(errorHandler);
 
