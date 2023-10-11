@@ -1,21 +1,64 @@
 const mongoose = require("mongoose");
-
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
 const RoomSchema = new Schema({
-	roomName: String,
-	roomPrice: String,
-	roomLocation: String,
-	roomImage: String,
-	roomCapacity: String,
-	roomReception: String,
-	roomBanquet: String,
-	roomClassroom: String,
-	roomDimension: String,
-	roomArea: String,
-	roomCeiling: String,
-	roomAddons: String,
-	roomSpeaker: String
+	partner_id: {
+		type: mongoose.Schema.Types.ObjectId,
+		required: true,
+		ref: "User",
+	},
+	name: {
+		type: String,
+		required: [true, "Please add name"],
+	},
+	price: {
+		type: String,
+		required: [true, "Please add price"],
+	},
+	location: {
+		type: String,
+		required: [true, "Please add location"],
+	},
+	image: {
+		type: String,
+		required: [true, "Please add image"],
+	},
+	capacity: {
+		type: String,
+		required: [true, "Please add capacity"],
+	},
+	reception: {
+		type: String,
+		required: [true, "Please add reception"],
+	},
+	banquet: {
+		type: String,
+		required: [true, "Please add banquet"],
+	},
+	classroom: {
+		type: String,
+		required: [true, "Please add classroom"],
+	},
+	dimension: {
+		type: String,
+		required: [true, "Please add dimension"],
+	},
+	area: {
+		type: String,
+		required: [true, "Please add area"],
+	},
+	ceiling: {
+		type: String,
+		required: [true, "Please add ceiling"],
+	},
+	addons: {
+		type: String,
+		required: [true, "Please add addons"],
+	},
+	speaker: {
+		type: String,
+		required: [true, "Please add speaker"],
+	},
 });
 
 module.exports = mongoose.model("Room", RoomSchema);

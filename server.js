@@ -1,31 +1,45 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
-const jwt = require("jsonwebtoken");
-const passport = require("passport");
-require("passport");
-const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
-const databaseUrl = process.env.DATABASE_URL;
+
 const cors = require('cors');
-//databse conection
-mongoose.connect(databaseUrl, {useNewUrlParser:true});
+const corsOptions = require('./config/corsOptions');
+
+const { errorHandler } = require("./middleware/errorHandler");
+const verifyJWT = require('./middleware/verifyJWT');
+const cookieParser = require('cookie-parser');
+const credentials = require('./middleware/credentials');
+const mongoose = require('mongoose');
+const connectDb = require("./config/dbConnection");
 const PORT = process.env.PORT || 4000;
-mongoose.connection.once("open", ()=>{
-	console.log("Remote Database Connection Established");
-});
-app.use(bodyParser.json());
-app.listen(PORT, function(){
-	console.log("Server is running on Port " + PORT);
-});
 
-const register = require("./routes/register");
-app.use('/admin', register);
+//databse conection
+connectDb();
 
-const authRouter = require("./routes/auth");
-app.use('/admin', authRouter);
+//custom middleware
+app.use(credentials);
+app.use(cors(corsOptions));
 
-const room_routes = require("./routes/room_routes");
-app.use('/admin', room_routes);
+//built in middleware
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
-const schedule_routes = require("./routes/schedule_routes");
-app.use('/admin', schedule_routes);
+//third party middleware
+app.use(cookieParser());
+
+//routes
+app.use('/register', require('./routes/register'));
+app.use('/login', require('./routes/login'));
+app.use('/refresh', require('./routes/refresh'));
+app.use('/logout', require('./routes/logout'));
+
+// app.use('/admin', require("./routes/api/room_routes"));
+// app.use('/admin', require("./routes/api/schedule_routes"));
+app.use(verifyJWT);
+app.use('/users', require("./routes/api/user"));
+
+app.use(errorHandler);
+
+mongoose.connection.once('open', () => {
+	app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+})
